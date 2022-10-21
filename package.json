@@ -1,0 +1,31 @@
+{
+  "name": "simple-product-app-nodejs",
+  "version": "1.0.0",
+  "description": "Simple product application which uses MongoDB as a database, NodeJS as backend technology, ExpressJS as a backend framework and HTML/CSS/JS/Jquery/Bootstrap for frontend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node www/server.js",
+    "dev": "nodemon www/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ansarisaqlain987/simple-product-app-nodejs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ansarisaqlain987/simple-product-app-nodejs/issues"
+  },
+  "homepage": "https://github.com/ansarisaqlain987/simple-product-app-nodejs#readme",
+  "dependencies": {
+    "ajv": "^8.11.0",
+    "body-parser": "^1.20.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.6.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

@@ -1,0 +1,309 @@
+<html>
+
+<head>
+    <title>Product App</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="container" css="font-size: 15px;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <h2>
+                            Product APP
+                        </h2>
+                    </li>
+                </ul>
+                <button class="btn btn-primary my-2 my-sm-0" onclick="openAddProductModal()">Add Product</button>
+            </div>
+        </nav>
+        <table id="product-list-table" class="table table-striped table-hover h5">
+            <thead>
+                <tr>
+                    <th scope="col" style="width: 25%;">Product ID</th>
+                    <th scope="col" style="width: 45%;">Product Name</th>
+                    <th scope="col" style="width: 15%;">Price</th>
+                    <th scope="col" style="width: 15%;">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="product-list-table-body"></tbody>
+        </table>
+    </div>
+    <!-- Add Product Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Add product</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="addProductNameTextBox" aria-describedby="Name"
+                            placeholder="Product Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="addPriceTextBox" aria-describedby="Price"
+                            placeholder="Price">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="addproduct()">Add
+                        Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Update Modal -->
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">Update product</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group hidden">
+                        <input type="text" class="form-control" id="updateProductIdTextBox" aria-describedby="emailHelp"
+                            placeholder="Product Id">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="updateProductNameTextBox"
+                            aria-describedby="emailHelp" placeholder="Product Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="updatePriceTextBox" aria-describedby="emailHelp"
+                            placeholder="Price">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="updateProduct()" data-dismiss="modal">Save
+                        changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete product</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input disabled type="text" class="form-control" id="deleteProductIdTextBox"
+                            aria-describedby="emailHelp" placeholder="Product Id">
+                    </div>
+                    <div class="form-group">
+                        <input disabled type="text" class="form-control" id="deleteProductNameTextBox"
+                            aria-describedby="emailHelp" placeholder="Product Name">
+                    </div>
+                    <div class="form-group">
+                        <input disabled type="number" class="form-control" id="deletePriceTextBox"
+                            aria-describedby="emailHelp" placeholder="Price">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="deleteProduct()">Delete
+                        Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Error Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                </div>
+                <div class="modal-body" id="errorModalMessageArea">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="openErrorModalButton" type="button" class="btn btn-primary hidden" data-toggle="modal"
+        data-target="#errorModal">
+        Error Toggle
+    </button>
+    <button id="openAddModalButton" type="button" class="btn btn-primary hidden" data-toggle="modal"
+        data-target="#addModal">
+        Add Modal Toggle
+    </button>
+    <button id="openDeleteModalButton" type="button" class="btn btn-primary hidden" data-toggle="modal"
+        data-target="#deleteModal">
+        Delete Modal Toggle
+    </button>
+    <button id="openUpdateModalButton" type="button" class="btn btn-primary hidden" data-toggle="modal"
+        data-target="#updateModal">
+        Update Modal Toggle
+    </button>
+    <script>
+        let globalDataSet = [];
+
+        async function getProductList() {
+            let data = await fetch('http://localhost:5000/product').then(function (response) {
+                return response.json();
+            })
+            if (data.statusCode === 200) globalDataSet = data.data;
+            else displayError("ERROR")
+        };
+
+        async function updateProduct() {
+            let name = $('#updateProductNameTextBox').val();
+            let price = $('#updatePriceTextBox').val();
+            let id = $('#updateProductIdTextBox').val();
+
+            try {
+                price = Number(price);
+            } catch (err) {
+                return 0;
+            }
+            const options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Origin": "*"
+                },
+                body: JSON.stringify({
+                    name: name,
+                    price: price
+                })
+            }
+
+            let data = await fetch('http://localhost:5000/product/' + id, options).then(function (response) {
+                return response.json();
+            });
+            if (data.statusCode === 200) {
+                await fetchAndDisplayData();
+            }
+            else displayError("ERROR")
+        };
+
+        async function deleteProduct() {
+            let id = $('#deleteProductIdTextBox').val();
+            const options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Origin": "*"
+                }
+            };
+            let data = await fetch('http://localhost:5000/product/delete/' + id, options).then(function (response) {
+                return response.json();
+            });
+            if (data.statusCode === 200) {
+                await fetchAndDisplayData();
+            }
+            else displayError("ERROR")
+        };
+
+        async function addproduct() {
+            let name = $('#addProductNameTextBox').val();
+            let price = $('#addPriceTextBox').val();
+
+            try {
+                price = Number(price);
+            } catch (err) {
+                return 0;
+            }
+            const options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Origin": "*"
+                },
+                body: JSON.stringify({
+                    name: name,
+                    price: price
+                })
+            }
+
+            let data = await fetch('http://localhost:5000/product', options).then(function (response) {
+                return response.json();
+            });
+            if (data.statusCode === 201) {
+                await fetchAndDisplayData();
+            }
+            else displayError("ERROR")
+        }
+
+        function openAddProductModal() { $('#openAddModalButton').click(); }
+
+        function openUpdateModal(id) {
+            $('#openUpdateModalButton').click();
+            let data = globalDataSet.filter(e => Number(e._id) === Number(id));
+            $('#updateProductNameTextBox').val(data[0].name);
+            $('#updatePriceTextBox').val(data[0].price);
+            $('#updateProductIdTextBox').val(data[0]._id);
+        };
+
+        function openDeleteModal(id) {
+            $('#openDeleteModalButton').click();
+            let data = globalDataSet.filter(e => Number(e._id) === Number(id));
+            $('#deleteProductNameTextBox').val(data[0].name);
+            $('#deletePriceTextBox').val(data[0].price);
+            $('#deleteProductIdTextBox').val(data[0]._id);
+        }
+
+        function displayData(data) {
+            let content = data.map(e => {
+                let id = e._id;
+                return `<tr>
+                        <th scope="row">${e._id}</th>
+                        <td>${e.name}</td>
+                        <td>${e.price}</td>
+                        <td>
+                            <button type="button" class="btn btn-success" onclick="openUpdateModal('${e._id}')"><i class="fas fa-edit"></i></button>
+                            <button type="button" class="btn btn-danger" onclick="openDeleteModal('${e._id}')"><i class="far fa-trash-alt"></i></button>
+                        </td>
+                    </tr>`
+            }).join('');
+            $('#product-list-table-body').html(content);
+
+        };
+
+        function displayError(errorMessage) {
+            $('#openErrorModalButton').click();
+            $('#errorModalMessageArea').html(errorMessage)
+        };
+
+        async function fetchAndDisplayData() {
+            await getProductList();
+            displayData(globalDataSet);
+        }
+
+        $(document).ready(async function () {
+            displayData(globalDataSet);
+            await fetchAndDisplayData();
+        });
+    </script>
+</body>
+
+</html>
